@@ -1,7 +1,7 @@
 from Database import Database
 
-db = Database().connect()
-cursor = db.cursor()
+db = Database()
+cursor = db.connect().cursor()
 cursor.execute("DROP TABLE IF EXISTS USERS_BY_POSTS;")
 
 cursor.execute("""
@@ -13,4 +13,5 @@ cursor.execute("""
     );
 """)
 
-db.commit()
+db.get_connection().commit()
+db.close()

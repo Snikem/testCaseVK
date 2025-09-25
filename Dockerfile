@@ -15,3 +15,7 @@ COPY app/scripts scripts
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN pip3 install --no-cache-dir -r requirements.txt
+
+#WORKDIR /app/scripts
+#CMD ["python3", "migrations.py"]
+#CMD ["sh", "-c", "python3 migrations.py && python3 extract.py"]
