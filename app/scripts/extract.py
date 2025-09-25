@@ -1,5 +1,5 @@
 from Database import Database
-import requests
+import requests # type: ignore
 
 
 API_URL = "https://jsonplaceholder.typicode.com/posts"
@@ -18,4 +18,5 @@ for item in data:
         (item['userId'], item['id'], item['title'], item['body'])
     )
 db.get_connection().commit()
+cursor.close()
 db.close()

@@ -12,7 +12,6 @@ class Database:
     def __init__(self):
         self._connection = None
     def connect(self):
-        print(self.DB_CONFIG)
         if self._connection is None:
             self._connection = psycopg2.connect(**self.DB_CONFIG)
         return self._connection
