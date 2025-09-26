@@ -10,8 +10,8 @@ RUN apt-get update && apt-get install -y \
 WORKDIR /root/app
 
 
-COPY requirements.txt .
-COPY app/scripts scripts
+COPY app/python_scripts/requirements.txt .
+COPY app/python_scripts scripts
 RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN pip3 install --no-cache-dir -r requirements.txt
@@ -20,7 +20,7 @@ COPY .env .
 
 RUN chmod +x .env
 
-COPY run_refresh_db.sh .
+COPY app/bash_scripts/run_refresh_db.sh .
 
 RUN chmod +x run_refresh_db.sh
 
@@ -38,7 +38,7 @@ RUN crontab /etc/cron.d/app-cron
 RUN touch /var/log/cron.log
 
 WORKDIR /root/app/scripts
-COPY migration.sh .
+COPY app/bash_scripts/migration.sh .
 RUN chmod +x migration.sh
 
 CMD ["./migration.sh"]
