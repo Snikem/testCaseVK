@@ -1,6 +1,15 @@
-from Database import Database
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+helpers_path = os.path.join(current_dir, 'helpers')
+sys.path.append(helpers_path)
+from database import database # type: ignore
+from logger import logs # type: ignore
 
-db = Database()
+logger = logs(filename="transform.py")
+
+logger.log_info("script transform.py start")
+db = database()
 cursor = db.connect().cursor()
 
 cursor.execute("""
@@ -26,3 +35,4 @@ cursor.execute("""
 db.get_connection().commit()
 cursor.close()
 db.close()
+logger.log_info("script transform.py end")

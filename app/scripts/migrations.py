@@ -1,6 +1,14 @@
-from Database import Database
+import sys
+import os
+current_dir = os.path.dirname(os.path.abspath(__file__))
+helpers_path = os.path.join(current_dir, 'helpers')
+sys.path.append(helpers_path)
+from database import database # type: ignore
+from logger import logs # type: ignore
+db = database()
+logger = logs(filename="migrations.py")
 
-db = Database()
+logger.log_info("script migrations.py start")
 cursor = db.connect().cursor()
 cursor.execute("DROP TABLE IF EXISTS USERS_BY_POSTS;")
 
@@ -15,3 +23,4 @@ cursor.execute("""
 
 db.get_connection().commit()
 db.close()
+logger.log_info("script migrations.py end")

@@ -5,8 +5,8 @@ if [ -f /root/app/.env ]; then
   . /root/app/.env
 fi
 set +o allexport
-echo "🚀 Запускаю extract.py..."
+echo "run extract.py..."
 /opt/venv/bin/python3 /root/app/scripts/extract.py
 
-echo "🚀 Запускаю transform.py..."
+echo "run transform.py..."
 /opt/venv/bin/python3 /root/app/scripts/transform.py
