@@ -10,6 +10,6 @@ until pg_isready -h localhost -p 5432 -U "$POSTGRES_USER"; do
 done
 
 python3 migrations.py
-
+cron && tail -f /var/log/cron.log
 # Чтобы контейнер не завершился сразу, держим postgres в переднем плане
 wait -n

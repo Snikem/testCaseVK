@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 
-WORKDIR /app
+WORKDIR /root/app
 
 
 COPY requirements.txt .
@@ -16,7 +16,9 @@ RUN python3 -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-WORKDIR /app
+COPY .env .
+
+RUN chmod +x .env
 
 COPY run_refresh_db.sh .
 
@@ -35,8 +37,7 @@ RUN chmod +x /etc/cron.d/app-cron
 RUN crontab /etc/cron.d/app-cron
 RUN touch /var/log/cron.log
 
-
-WORKDIR /app/scripts
+WORKDIR /root/app/scripts
 COPY migration.sh .
 RUN chmod +x migration.sh
 
