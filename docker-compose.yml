@@ -1,6 +1,6 @@
 services:
   db:
-    build: . 
+    image: postgres:16
     env_file:
     - .env
     container_name: mydb
@@ -13,3 +13,16 @@ services:
       - "${DB_PORT}:5432"
     volumes:
       - ./data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER}"]
+      interval: 1s
+      timeout: 1s
+      retries: 7
+  python-app:
+    build: .
+    container_name: python_app
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env

@@ -10,8 +10,10 @@ class database:
     'password': os.getenv('POSTGRES_PASSWORD'),
     'port': os.getenv('DB_PORT')
     }
+
     def __init__(self):
         self._connection = None
+
     def connect(self):
         logger = logs(filename="database.py")
         logger.log_info(f"Connecting to database")
@@ -22,12 +24,14 @@ class database:
         else:
             logger.log_info("database connection established")
         return self._connection
+    
     def close(self):
         logger = logs(filename="database.py")
         if self._connection:
             self._connection.close()
             self._connection = None
         logger.log_info("database connection closed")
+
     def get_connection(self):
         return self._connection
 
