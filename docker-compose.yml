@@ -3,7 +3,7 @@ services:
     image: postgres:16
     env_file:
     - .env
-    container_name: mydb
+    container_name: db
     restart: always
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
@@ -18,11 +18,13 @@ services:
       interval: 1s
       timeout: 1s
       retries: 7
-  python-app:
+  etl:
     build: .
-    container_name: python_app
+    container_name: etl
     depends_on:
       db:
         condition: service_healthy
     env_file:
       - .env
+    ports:
+      - "5001:5000"

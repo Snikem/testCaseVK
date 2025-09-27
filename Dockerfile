@@ -39,5 +39,6 @@ RUN touch /var/log/cron.log
 WORKDIR /root/app/scripts
 COPY app/bash_scripts/migration.sh .
 RUN chmod +x migration.sh
+RUN chmod +x api/router.py
 
 CMD ["./migration.sh"]
