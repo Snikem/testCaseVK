@@ -26,15 +26,15 @@ RUN chmod +x run_refresh_db.sh
 
 # Устанавливаем cron
 RUN apt-get update && apt-get install -y cron && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && \
+    apt-get install -y cron gettext-base && \
+    rm -rf /var/lib/apt/lists/*
 
-# Копируем cron-файл
-COPY crontab /etc/cron.d/app-cron
+COPY app/crons/crontab.template .
 
-# Даем права
-RUN chmod +x /etc/cron.d/app-cron
 
-# Загружаем крон-задачи
-RUN crontab /etc/cron.d/app-cron
+RUN chmod +x crontab.template
+
 RUN touch /var/log/cron.log
 
 WORKDIR /root/app/scripts
