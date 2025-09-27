@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-python3 migrations.py
+python3 migration.py
 
 
 echo "$(date '+%Y-%m-%d %H:%M:%S,%3N') -  INFO - migration.sh - run crontab"
