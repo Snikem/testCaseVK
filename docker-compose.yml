@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
     ports:
-      - "${DB_PORT}:5432"
+      - "${DB_PORT_FROM_CONTAINER}:${DB_PORT_IN_CONTAINER}"
     volumes:
       - ./data:/var/lib/postgresql/data
     healthcheck:
@@ -27,4 +27,4 @@ services:
     env_file:
       - .env
     ports:
-      - "5001:5000"
+      - "${API_PORT_FROM_CONTAINER}:${API_PORT_IN_CONTAINER}"

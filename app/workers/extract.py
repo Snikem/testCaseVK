@@ -1,7 +1,10 @@
 import os
 import sys
+# Получаем путь к корню проекта
 current_dir = os.path.dirname(os.path.abspath(__file__))
-helpers_path = os.path.join(current_dir, 'helpers')
+project_root = os.path.join(current_dir, '..')  # до корня проекта
+# Добавляем helpers в путь
+helpers_path = os.path.join(project_root, 'helpers')
 sys.path.append(helpers_path)
 import requests # type: ignore
 from logger import logs # type: ignore
@@ -25,7 +28,7 @@ logger = logs(filename="extract.py")
 logger.log_info("script extract.py start")
 API_URL = os.getenv('API_URL')
 
-db = database()
+db = database(logger)
 cursor = db.connect().cursor()
 try:
     data = fetch_data(API_URL)
@@ -45,7 +48,7 @@ for item in data:
     except Exception as e:
         logger.log_error(f"Error inserting item {item['id']}: {e}")
 
-db.get_connection().commit()
+db.commit()
 cursor.close()
 db.close()
 

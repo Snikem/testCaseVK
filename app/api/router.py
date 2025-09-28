@@ -1,11 +1,13 @@
 import os
 import sys
 
+# Получаем путь к корню проекта
 current_dir = os.path.dirname(os.path.abspath(__file__))
-helpers_path = os.path.abspath(os.path.join(current_dir, '..', 'helpers'))
-if helpers_path not in sys.path:
-    sys.path.append(helpers_path)
-from flask import Flask
+project_root = os.path.join(current_dir, '..')  # до корня проекта
+# Добавляем helpers в путь
+helpers_path = os.path.join(project_root, 'helpers')
+sys.path.append(helpers_path)
+from flask import Flask # type: ignore
 from database import database # type: ignore
 from logger import logs # type: ignore
 
@@ -15,7 +17,7 @@ logger = logs(filename="router.py")
 @app.route("/top", methods=['GET'])
 def get_top_users():
     logger.log_info("Received request for /top")
-    db = database()
+    db = database(logger)
     cursor = db.connect().cursor()
     cursor.execute("""
         SELECT * FROM top_users_by_posts
@@ -43,4 +45,4 @@ def get_top_users():
     return html
 if __name__ == "__main__":
     logger.log_info("Starting Flask app...")
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host=os.getenv('API_HOST'), port=int(os.getenv('API_PORT_IN_CONTAINER')))

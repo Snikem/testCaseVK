@@ -1,1 +1,0 @@
-$CRON_SCHEDULE /root/app/run_refresh_db.sh >> /proc/1/fd/1 2>&1

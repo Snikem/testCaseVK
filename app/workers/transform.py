@@ -1,15 +1,19 @@
 import sys
 import os
+# Получаем путь к корню проекта
 current_dir = os.path.dirname(os.path.abspath(__file__))
-helpers_path = os.path.join(current_dir, 'helpers')
+project_root = os.path.join(current_dir, '..')  # до корня проекта
+# Добавляем helpers в путь
+helpers_path = os.path.join(project_root, 'helpers')
 sys.path.append(helpers_path)
+
 from database import database # type: ignore
 from logger import logs # type: ignore
 
 logger = logs(filename="transform.py")
 
 logger.log_info("script transform.py start")
-db = database()
+db = database(logger)
 cursor = db.connect().cursor()
 
 cursor.execute("""
@@ -19,9 +23,9 @@ cursor.execute("""
         calculated_at TIMESTAMP
     )
     """)
-db.get_connection().commit()
+db.commit()
 cursor.execute("TRUNCATE TABLE top_users_by_posts")
-db.get_connection().commit()
+db.commit()
 cursor.execute("""
     INSERT INTO top_users_by_posts (user_id, posts_cnt, calculated_at)
     SELECT
@@ -32,7 +36,7 @@ cursor.execute("""
     GROUP BY user_id
     ORDER BY posts_cnt DESC
     """)
-db.get_connection().commit()
+db.commit()
 cursor.close()
 db.close()
 logger.log_info("script transform.py end")

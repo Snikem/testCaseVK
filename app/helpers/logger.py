@@ -18,7 +18,7 @@ class logs:
         for name in ("flask", "werkzeug"):
             flask_logger = logging.getLogger(name)
             flask_logger.setLevel(logging.INFO)
-            flask_logger.propagate = True  # передаём в root
+            flask_logger.propagate = True 
 
         self.logger = logging.getLogger(__name__)
 

@@ -1,0 +1,1 @@
+$CRON_SCHEDULE /root/app/workers/_run_workers.sh >> /proc/1/fd/1 2>&1
