@@ -24,6 +24,14 @@ cursor.execute("""
         body TEXT
     );
 """)
+cursor.execute("DROP TABLE IF EXISTS top_users_by_posts;")
+cursor.execute("""
+        CREATE TABLE top_users_by_posts (
+            user_id INT,
+            posts_cnt INT,
+            calculated_at TIMESTAMP
+        )
+        """)
 
 db.commit()
 db.close()
