@@ -1,12 +1,8 @@
 import os
 import sys
 
-
 current_dir = os.path.dirname(os.path.abspath(__file__))
-
 helpers_path = os.path.abspath(os.path.join(current_dir, '..', 'helpers'))
-
-# Добавляем helpers в sys.path
 if helpers_path not in sys.path:
     sys.path.append(helpers_path)
 from flask import Flask
@@ -38,6 +34,11 @@ def get_top_users():
     for row in data:
         html += f"<tr><td>{row[0]}</td><td>{row[1]}</td><td>{row[2]}</td></tr>"
     html += "</table>"
+
+    db.get_connection().commit()
+    cursor.close()
+    db.close()
+
 
     return html
 if __name__ == "__main__":
