@@ -1,6 +1,4 @@
 data/
-.env
 test/__pycache__/
-test/.env
 test/.pytest_cache/
 test/data/
