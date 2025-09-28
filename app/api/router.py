@@ -3,7 +3,7 @@ import sys
 
 # Получаем путь к корню проекта
 current_dir = os.path.dirname(os.path.abspath(__file__))
-project_root = os.path.join(current_dir, '..')  # до корня проекта
+project_root = os.path.join(current_dir, '..') 
 # Добавляем helpers в путь
 helpers_path = os.path.join(project_root, 'helpers')
 sys.path.append(helpers_path)

@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres:16
+    env_file:
+    - .env
+    container_name: db_test
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${DB_PORT_FROM_CONTAINER}:${DB_PORT_IN_CONTAINER}"
+    volumes:
+      - ./db_migrations/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+      - ./data:/var/lib/postgresql/data
+    
