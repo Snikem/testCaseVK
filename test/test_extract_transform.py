@@ -11,8 +11,8 @@ import pytest  # type: ignore
 from unittest.mock import patch
 
 # Замените на реальные имена файлов
-from extract import extract_data
-from transform import transform_data
+from extract import extract_data  # type: ignore
+from transform import transform_data  # type: ignore
 from database_mock import test_database
 
 
